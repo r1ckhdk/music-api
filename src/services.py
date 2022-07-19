@@ -4,7 +4,7 @@ from . import models, schemas
 import sqlalchemy.orm as orm
 
 def create_database():
-    Base.metadata.drop_all(bind=engine)
+    # Base.metadata.drop_all(bind=engine)
     return Base.metadata.create_all(bind=engine)
 
 def get_db():
