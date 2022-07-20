@@ -1,4 +1,3 @@
-from enum import auto
 import sqlalchemy as sql
 import sqlalchemy.orm as orm
 import sqlalchemy.ext.declarative as declarative

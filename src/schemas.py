@@ -1,4 +1,3 @@
-from pickletools import int4
 from typing import List
 from pydantic import BaseModel
 from .database import Base

@@ -1,5 +1,4 @@
 from typing import List
-from urllib import response
 from fastapi import FastAPI
 import fastapi
 import sqlalchemy.orm as orm

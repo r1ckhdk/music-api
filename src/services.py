@@ -1,10 +1,8 @@
-from platform import release
 from .database import Base, engine, SessionLocal
 from . import models, schemas
 import sqlalchemy.orm as orm
 
 def create_database():
-    # Base.metadata.drop_all(bind=engine)
     return Base.metadata.create_all(bind=engine)
 
 def get_db():
