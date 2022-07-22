@@ -36,8 +36,13 @@ def delete_artist(db:orm.Session, artist_id: int):
 
 def create_release(db: orm.Session, release: schemas.ReleaseCreate):
     db_release = models.Release(
-        title=release.title, releaseType=release.releaseType,
-        year=release.year, genre=release.genre, artist_id=release.artist_id)
+        title=release.title,
+        releaseType=release.releaseType,
+        year=release.year,
+        genre=release.genre,
+        artist_id=release.artist_id,
+        label_id=release.label_id)
+
     db.add(db_release)
     db.commit()
     db.refresh(db_release)
@@ -45,4 +50,13 @@ def create_release(db: orm.Session, release: schemas.ReleaseCreate):
 
 def get_releases(db:orm.Session, skip: int=0):
     return db.query(models.Release).offset(skip).all()
-    
+
+def get_labels(db:orm.Session, skip: int=0):
+    return db.query(models.Label).offset(skip).all()
+
+def create_label(db:orm.Session, label:schemas.LabelCreate):
+    db_label = models.Label(name=label.labelName)
+    db.add(db_label)
+    db.commit()
+    db.refresh(db_label)
+    return db_label

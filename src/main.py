@@ -17,13 +17,18 @@ def create_artist(
 
 
 @app.get("/artists/", response_model=List[schemas.Artist])
-def read_artists(skip: int=0, db: orm.Session=fastapi.Depends(services.get_db)):
-    artists = services.get_artists(db=db)
-    return artists
+def read_artists(
+    skip: int=0,
+    db: orm.Session=fastapi.Depends(services.get_db)
+):
+    return services.get_artists(db=db)
 
 
 @app.get("/artists/{artist_id}",response_model=schemas.Artist)
-def read_artist(artist_id: int, db: orm.Session=fastapi.Depends(services.get_db)):
+def read_artist(
+    artist_id: int,
+    db: orm.Session=fastapi.Depends(services.get_db)
+):
     db_artist = services.get_artist_id(db=db, artist_id=artist_id)
     if db_artist is None:
         raise fastapi.HTTPException(
@@ -31,15 +36,42 @@ def read_artist(artist_id: int, db: orm.Session=fastapi.Depends(services.get_db)
         )
     return db_artist
 
+
 @app.delete("/artists/{artist_id}")
-def delete_artist(artist_id: int, db: orm.Session=fastapi.Depends(services.get_db)):
-    response = services.delete_artist(db=db, artist_id=artist_id)
-    return response
+def delete_artist(
+    artist_id: int,
+    db: orm.Session=fastapi.Depends(services.get_db)
+):
+    return services.delete_artist(db=db, artist_id=artist_id)
+
 
 @app.post("/releases/")
-def create_release(release: schemas.ReleaseCreate, db: orm.Session=fastapi.Depends(services.get_db)):
+def create_release(
+    release: schemas.ReleaseCreate,
+    db: orm.Session=fastapi.Depends(services.get_db)
+):
     return services.create_release(db=db, release=release)
 
+
 @app.get("/releases/")
-def get_releases(skip: int=0, db: orm.Session=fastapi.Depends(services.get_db)):
+def get_releases(
+    skip: int=0,
+    db: orm.Session=fastapi.Depends(services.get_db)
+):
     return services.get_releases(db=db)
+
+
+@app.get("/labels/", response_model=List[schemas.Label])
+def get_labels(
+    skip: int=0,
+    db: orm.Session=fastapi.Depends(services.get_db)
+):
+    return services.get_labels(db=db)
+
+
+@app.post("/labels/")
+def create_label(
+    label: schemas.LabelCreate,
+    db: orm.Session=fastapi.Depends(services.get_db)
+):
+    return services.create_label(db=db, label=label)
