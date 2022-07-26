@@ -8,9 +8,11 @@ class ReleaseBase(BaseModel):
     year: int
     genre: str
     artist_id:int
+    label_id:int
 
 class ReleaseCreate(ReleaseBase):
     artist_id:int
+    label_id:int
 
 class Release(ReleaseBase):
     id: int
@@ -26,6 +28,19 @@ class ArtistCreate(ArtistBase):
     pass
 
 class Artist(ArtistBase):
+    id: int
+    releases: List[Release] = []
+
+    class Config:
+        orm_mode = True
+
+class LabelBase(BaseModel):
+    labelName: str
+
+class LabelCreate(LabelBase):
+    pass
+
+class Label(LabelBase):
     id: int
     releases: List[Release] = []
 

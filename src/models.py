@@ -7,6 +7,7 @@ class Artist(Base):
     id = Column(Integer, primary_key=True, index=True)
     artistName = Column(String)
     country = Column(String)
+    
     releases = relationship("Release", back_populates="artist")
 
 
@@ -17,9 +18,18 @@ class Release(Base):
     releaseType = Column(String)
     year = Column(Integer)
     genre = Column(String)
-    artist_id = Column(Integer, ForeignKey("artists.id"))
+    artist_id = Column(Integer, ForeignKey("artists.id"), nullable=False)
+    label_id = Column(Integer, ForeignKey("labels.id"), nullable=False)
 
     artist = relationship("Artist", back_populates="releases")
-
+    label = relationship("Label", back_populates="releases")
     # CheckConstraint("year > 0", name="check1")
     # CheckConstraint("year < 10000", name="check2")
+
+
+class Label(Base):
+    __tablename__ = "labels"
+    id = Column(Integer, primary_key=True, index=True)
+    labelName = Column(String, nullable=False)
+
+    releases = relationship("Release", back_populates="label")
